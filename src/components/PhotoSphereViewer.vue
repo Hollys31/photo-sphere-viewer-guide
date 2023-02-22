@@ -55,7 +55,6 @@ export default {
   created() {},
   mounted() {
     this.panoramaUrl = this.imgList[0].panorama || this.defaultUrl;
-    
     this.initViewer();
     this.handelListenerViewerClick();
     this.handleSelectMarker();
@@ -79,7 +78,7 @@ export default {
         panorama: this.panoramaUrl || this.defaultUrl,
         caption: "江西憶源多媒体科技有限公司",
         loadingImg: require("../assets/loader.gif"),
-        touchmoveTwoFingers: true,
+       /*  touchmoveTwoFingers: true, */
         mousewheelCtrlKey: false,
         defaultPitch: _this.animatedValues.pitch.start,
         defaultYaw: _this.animatedValues.yaw.start,
@@ -141,6 +140,11 @@ export default {
         once: true,
       });
     },
+    handleViewerReady() {
+      this.enteraAimation();
+      this.markersPlugin.setMarkers(this.imgList[this.currIndex].markers); //设置标签
+      this.showInitMarker();
+    },
     getViewerInfo() {
       const position = this.viewer.getPosition();
       const zoom = this.viewer.getZoomLevel();
@@ -152,12 +156,7 @@ export default {
         this.handelGalleryActive();
       });
     },
-    handleViewerReady() {
-      
-      this.enteraAimation();
-      this.markersPlugin.setMarkers(this.imgList[this.currIndex].markers); //设置标签
-      this.showInitMarker();
-    },
+    
     viewerRotate(position){
        this.viewer.rotate(position);
     },
